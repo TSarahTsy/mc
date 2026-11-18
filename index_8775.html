@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>數學遊戲目錄</title>
+<style>
+  @font-face {
+    font-family: "MathsThin";
+    src: url("maths_thin_v2.ttf") format("truetype");
+    font-display: swap;
+  }
+  :root {
+    --ink: #1f2430;
+    --muted: #6b7280;
+    --bg: #f7f5f0;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Noto Sans HK", "PingFang HK", "Microsoft JhengHei", sans-serif;
+    -webkit-tap-highlight-color: transparent;
+  }
+  header {
+    text-align: center;
+    padding: 48px 20px 12px;
+  }
+  header h1 {
+    margin: 0;
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 900;
+    letter-spacing: .08em;
+  }
+  header p {
+    margin: 10px 0 0;
+    color: var(--muted);
+    font-size: 17px;
+  }
+  main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 28px 24px 60px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 28px;
+  }
+  .card {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border-radius: 26px;
+    padding: 26px 26px 28px;
+    border: 2px solid #ece8e1;
+    box-shadow: 0 6px 0 var(--shadow), 0 14px 28px rgba(0,0,0,.06);
+    text-decoration: none;
+    color: inherit;
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .card:hover { transform: translateY(-4px); }
+  .card:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--shadow), 0 6px 14px rgba(0,0,0,.06); }
+  .card::before {
+    content: "";
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 190px; height: 190px;
+    border-radius: 50%;
+    background: var(--blob);
+  }
+  .icon {
+    position: relative;
+    width: 72px; height: 72px;
+    border-radius: 20px;
+    background: var(--blob);
+    display: grid;
+    place-items: center;
+    font-size: 38px;
+  }
+  .range {
+    position: relative;
+    margin: 18px 0 6px;
+    font-family: "MathsThin", "Chakra Petch", sans-serif;
+    font-size: 52px;
+    line-height: 1;
+    color: var(--main);
+    font-weight: 300;
+  }
+  .range.cn {
+    font-family: "Noto Serif HK", "Songti TC", "PMingLiU", serif;
+    font-size: 40px;
+    letter-spacing: .25em;
+    padding: 6px 0;
+  }
+  .card h2 {
+    margin: 8px 0 10px;
+    font-size: 25px;
+    font-weight: 900;
+    line-height: 1.4;
+  }
+  .card p {
+    margin: 0 0 24px;
+    color: var(--muted);
+    font-size: 16px;
+    line-height: 1.7;
+    flex: 1;
+  }
+  .btn {
+    align-self: flex-start;
+    background: var(--main);
+    color: #fff;
+    font-weight: 800;
+    font-size: 18px;
+    padding: 11px 26px;
+    border-radius: 999px;
+    letter-spacing: .1em;
+  }
+  .teal { --main: #1b9aa0; --blob: #e3f4f6; --shadow: #c9e7e8; }
+  .blue { --main: #2f5fd0; --blob: #e6ecfb; --shadow: #cfd9f2; }
+  .red  { --main: #b8202a; --blob: #fde5e5; --shadow: #f1cfcf; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>數學遊戲</h1>
+  <p>請選擇一個遊戲開始</p>
+</header>
+
+<main id="list"></main>
+
+<script>
+  // 請按實際檔案位置修改 href
+  const games = [
+    {
+      theme: "teal", icon: "👆", range: "1 - 20",
+      title: "二十格框：放出指定數量",
+      desc: "按格子放入或拿走圓點，放出聽到的數量。",
+      href: "countquantities/index.html"
+    },
+    {
+      theme: "blue", icon: "✏️", range: "0 - 31",
+      title: "寫數字",
+      desc: "跟筆順描寫或聽寫 0 至 31。",
+      href: "writenumber/index.html"
+    },
+    {
+      theme: "red", icon: "📅", range: "日期", cn: true,
+      title: "月曆讀日期",
+      desc: "在月曆上讀日期、找日期、說出星期幾。",
+      href: "chinese/chinese_date.html"
+    }
+  ];
+
+  document.getElementById("list").innerHTML = games.map(g => `
+    <a class="card ${g.theme}" href="${g.href}">
+      <div class="icon">${g.icon}</div>
+      <div class="range${g.cn ? " cn" : ""}">${g.range}</div>
+      <h2>${g.title}</h2>
+      <p>${g.desc}</p>
+      <span class="btn">開始 ▶</span>
+    </a>
+  `).join("");
+</script>
+</body>
+</html>
